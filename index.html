@@ -139,42 +139,68 @@ flex-direction: column;
       });
 
       function acceptLove() {
-        let yesBtn = document.getElementById("yesBtn");
-        let rect = yesBtn.getBoundingClientRect(); // Get button position
-        let bigHeart = document.getElementById("bigHeart");
-        let centerX = window.innerWidth / 2;
-        let centerY = window.innerHeight / 2;
-        let heartCount = 10;
+  let yesBtn = document.getElementById("yesBtn");
+  let rect = yesBtn.getBoundingClientRect(); // Get button position
+  let bigHeart = document.getElementById("bigHeart");
+  let centerX = window.innerWidth / 2;
+  let centerY = window.innerHeight / 2;
+  let heartCount = 10;
 
-        // Create hearts that travel to center
-        for (let i = 0; i < heartCount; i++) {
-          let heart = document.createElement("div");
-          heart.classList.add("heart");
-          heart.innerHTML = "💖";
-          heart.style.left = `${rect.left + rect.width / 2}px`;
-          heart.style.top = `${rect.top + rect.height / 2}px`;
-          document.body.appendChild(heart);
+  // Create hearts that travel to center
+  for (let i = 0; i < heartCount; i++) {
+    let heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "💖";
+    heart.style.left = `${rect.left + rect.width / 2}px`;
+    heart.style.top = `${rect.top + rect.height / 2}px`;
+    document.body.appendChild(heart);
 
-          gsap.to(heart, {
-            x: centerX - (rect.left + rect.width / 2),
-            y: centerY - (rect.top + rect.height / 2),
-            opacity: 1,
-            scale: 1.2,
-            duration: 1.5,
-            ease: "power2.out",
-            onComplete: () => heart.remove(),
-          });
-        }
+    gsap.to(heart, {
+      x: centerX - (rect.left + rect.width / 2),
+      y: centerY - (rect.top + rect.height / 2),
+      opacity: 1,
+      scale: 1.2,
+      duration: 1.5,
+      ease: "power2.out",
+      onComplete: () => heart.remove(),
+    });
+  }
 
-        // Show big heart after delay
+  // Show big heart after delay
+  setTimeout(() => {
+    gsap.to(bigHeart, {
+      opacity: 1,
+      scale: 3,
+      duration: 1,
+      ease: "power2.out",
+    });
+  }, 1500);
+
+  // White flash effect before heart expansion
+  setTimeout(() => {
+    document.body.style.transition = "background 0.2s ease";
+    document.body.style.background = "white";
+  }, 2200);
+
+  // Expand big heart and transition background to heart's color
+  setTimeout(() => {
+    gsap.to(bigHeart, {
+      scale: 100,
+      duration: 2,
+      ease: "power2.in",
+      onStart: () => {
         setTimeout(() => {
-          gsap.to(bigHeart, {
-            opacity: 1,
-            scale: 3,
-            duration: 1,
-            ease: "power2.out",
-          });
-        }, 1500);
+          document.body.style.background = "#f8312f"; // Match heart color
+        }, 500);
+      },
+      onComplete: () => {
+        document.body.innerHTML =
+          '<div class="message"> <img src="./1.png" alt="img">You are officially mine! 💖</div>';
+        document.querySelector(".message").style.display = "flex";
+      },
+    });
+  }, 2500);
+}
 
         // Expand big heart to cover screen and show final message
         setTimeout(() => {
