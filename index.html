@@ -1,202 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Love Proposal 💖</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🩷</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <style>
-*{
-margin:0;
-padding:0;
-}
-      body {
-        font-family: "Arial", sans-serif;
-        text-align: center;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
-        overflow: hidden;
-        background: black;
-      }
-      .container {
-        background: white;
-        padding: 20px;
-        border-radius: 15px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        text-align: center;
-        position: relative;
-        width: 320px;
-        opacity: 0;
-height:40dvh;
-display: flex;
-        justify-content: center;
-        align-items: center;
-flex-direction: column;
+    <link rel="stylesheet" href="stlye.css">
+   
+</head>
+<body>
 
-      }
-      h1 {
-        color: #ff4d6d;
-      }
-      .btn {
-        padding: 12px 25px;
-        font-size: 18px;
-        border: none;
-        cursor: pointer;
-        transition: 0.3s;
-        border-radius: 8px;
-        position: relative;
-        overflow: hidden;
-      }
-      .yes {
-        background: #ffffff;
-        color: rgb(0, 0, 0);
-        border: 1px solid black;
-      }
-      .yes:hover {
-        background: #d43f5e;
-      }
-      .no {
-        background: #ccc;
-        color: black;
-        position: absolute;
-        left: 60%;
-      }
-      .button-span {
-        display: flex;
-        gap: 2rem;
-        width: 100%;
-        align-items: center;
-        justify-content: space-between;
-      }
-      .heart {
-        position: absolute;
-        font-size: 15px;
-        color: red;
-        opacity: 0;
-      }
-      .big-heart {
-        position: absolute;
-        font-size: 50px;
-        color: red;
-        opacity: 0;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-      }
-      .message {
-        display: none;
-        font-size: 2rem;
-        color: white;
-        font-weight: bold;
-        flex-direction: column;
-        justify-items: center;
-        align-items: center;
-      }
+   
 
-      .message img {
-        width: 60%;
-        margin-bottom: 2rem;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <h1>Will You Be Mine?</h1>
-      <span class="button-span">
-        <button class="btn yes" onclick="acceptLove()" id="yesBtn">
-          Yes 
-        </button>
-        <button
-          class="btn no"
-          id="noBtn"
-          onmouseover="moveNo()"
-          ontouchstart="moveNo()"
-        >
-          No 😢
-        </button>
-      </span>
-    </div>
+<div class="container">
+    <h1>Will You Be Mine?</h1>
+    <span class="button-span">
+        <button class="btn yes" onclick="acceptLove()" id="yesBtn">Yes </button>
+        <button class="btn no" id="noBtn" onmouseover="moveNo()" ontouchstart="moveNo()">No 😢</button>
+    </span>
+</div>
 
-    <!-- Big Heart -->
-    <div class="big-heart" id="bigHeart">🩷</div>
 
-    <!-- Final Message -->
-    <div class="message" id="finalMessage">
-      <img src="./1.png" alt="img" />
-      <span> You are officially mine! 💖</span>
-    </div>
+<div class="flash" id="flashEffect"></div>
 
-    <script>
-      // GSAP Entry Animation
-      gsap.to(".container", {
-        duration: 1.5,
-        opacity: 1,
-        scale: 1,
-        ease: "bounce.out",
-      });
 
-      function acceptLove() {
-        let yesBtn = document.getElementById("yesBtn");
-        let rect = yesBtn.getBoundingClientRect(); // Get button position
-        let bigHeart = document.getElementById("bigHeart");
-        let centerX = window.innerWidth / 2;
-        let centerY = window.innerHeight / 2;
-        let heartCount = 10;
+<div class="big-heart" id="bigHeart">🩷</div>
 
-        // Create hearts that travel to center
-        for (let i = 0; i < heartCount; i++) {
-          let heart = document.createElement("div");
-          heart.classList.add("heart");
-          heart.innerHTML = "💖";
-          heart.style.left = `${rect.left + rect.width / 2}px`;
-          heart.style.top = `${rect.top + rect.height / 2}px`;
-          document.body.appendChild(heart);
 
-          gsap.to(heart, {
-            x: centerX - (rect.left + rect.width / 2),
-            y: centerY - (rect.top + rect.height / 2),
-            opacity: 1,
-            scale: 1.2,
-            duration: 1.5,
-            ease: "power2.out",
-            onComplete: () => heart.remove(),
-          });
-        }
+<div class="message" id="finalMessage">
+    <div class="background"></div>
+    <img src="./1.png" alt="img">
+    <span>You are officially mine! 🩷</span>
+</div>
 
-        // Show big heart after delay
-        setTimeout(() => {
-          gsap.to(bigHeart, {
-            opacity: 1,
-            scale: 3,
-            duration: 1,
-            ease: "power2.out",
-          });
-        }, 1500);
-
-        // Expand big heart to cover screen and show final message
-        setTimeout(() => {
-          gsap.to(bigHeart, {
-            scale: 100,
-            duration: 2,
-            ease: "power2.in",
-            onComplete: () => {
-              document.body.style.background = "#f8312f";
-              document.body.innerHTML =
-                '<div class="message"> <img src="./1.png" alt="img">You are officially mine! 💖</div>';
-              document.querySelector(".message").style.display = "flex";
-            },
-          });
-        }, 2500);
-      }
-
-      function moveNo() {
-        let x = Math.random() * 200 - 100;
-        let y = Math.random() * 200 - 100;
-        gsap.to("#noBtn", { duration: 0.3, x: x, y: y });
-      }
-    </script>
-  </body>
+<script src="script.js"></script>
+</body>
 </html>
